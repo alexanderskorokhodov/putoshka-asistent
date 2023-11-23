@@ -73,6 +73,7 @@ class LectureDocxDataSource:
 
     def makeTextWithBoldWords(self, words, paragraph):
         for item in words:
+            print(item)
             run = paragraph.add_run(item[0])
             font = run.font
             font.size = Pt(12)  # Set the font size
@@ -86,11 +87,11 @@ class LectureDocxDataSource:
         self.makeShortContent(shortContests)
 
         self.makeTermsSection(terms=terms)
-
         for section in text:
+            print(section)
             self.makeHeader(section[0])
             paragraph = self.doc.add_paragraph()
             self.makeTextWithBoldWords(section[1], paragraph)
 
-    def getDocs(self):
-        self.doc.save("demo.docx")
+    def saveDocx(self, id):
+        self.doc.save(f"uploaded_docx/{id}.docx")

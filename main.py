@@ -5,14 +5,12 @@ from fastapi.responses import FileResponse
 from domain.repository.LectureRepository import LectureRepository
 
 app = FastAPI()
-#app.MAX_FILE_SIZвE = 10 * 1024 * 1024
-
 lectureRepository = LectureRepository()
 @app.post("/upload_lecture")
 async def uploadLecture(file: UploadFile):
     contents = await file.read()
-    id = lectureRepository.saveAudioFile(contents)
-    return {"id", id}
+    data = lectureRepository.getLectureInfo(contents)
+    return data
 
 @app.post("/upload_image")
 async def uploadImage(id: str, file:UploadFile):
