@@ -1,0 +1,79 @@
+@import "./variables.scss";
+.right {
+    padding-left: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .lectureViewContainer {
+        max-width: 30em;
+        .topBarWrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            .addTitle {
+                font-weight: 500;
+                font-size: 30px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                // flex: 2;
+                // min-width: 330px
+            }
+            .close {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                // flex: 1;
+                img {
+                    height: 24px;
+                }
+            }
+            .spacer {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        .imgWrapper {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            height: 100%;
+            img {
+                background-repeat: no-repeat;
+                border-radius: $border-radius-1;
+                background-position: center;
+                background-size: cover;
+                width: 100%;
+            }
+        }
+        .glosWrapper {
+            border: 2px solid $bright;
+            color: $bright;
+            justify-content: center;
+            padding: 0.4em 0;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            margin-top: 1em;
+        }
+        .upinfo {
+            .up {
+                font-size: 25px;
+            }
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            margin: 1em 0em;
+            justify-content: space-between;
+            align-items: center;
+            .document {
+                border: 2px solid $bright;
+                color: $bright;
+                padding: 0.4em 1em;
+                border-radius: 10px;
+            }
+        }
+    }
+}

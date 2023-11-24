@@ -4,12 +4,13 @@ import SearchIcon from "../icons/SearchIcon.svg"
 import Settings from "../icons/Settings.svg"
 import Clear from "../icons/CloseBig.svg"
 import LectureElement from "./LectureElement";
+import server_url from "../site";
 
 import "../styles/createview.scss"
 import FileUI from "./FileUI";
 import FileLecture from "./LectureUpload";
-
-function CreateView({add_lecture}) {
+import { useParams } from 'react-router-dom';
+function CreateView({add_lecture, nav}) {
 
     const handleUploadClick = () => {
         if (!lecFile) {
@@ -20,7 +21,7 @@ function CreateView({add_lecture}) {
         let formData = new FormData();
         formData.append('file', lecFile)
         // 👇 Uploading the file using the fetch API to the server
-        fetch('https://d995-89-109-249-13.ngrok-free.app/upload_lecture', {
+        fetch(server_url+'upload_lecture', {
           method: 'POST',
           body: formData,
 
@@ -32,7 +33,30 @@ function CreateView({add_lecture}) {
           },
         })
           .then((res) => res.json())
-          .then((data) => {add_lecture(data, FIO, title, theme);console.log(data)})
+          .then((data) => {
+            if (!file) {
+                add_lecture(data, FIO, title, theme);console.log(data)
+              return;
+            }
+            let formData = new FormData();
+            formData.append('file', file)
+            // formData.append('id', data.id)
+            // 👇 Uploading the file using the fetch API to the server
+            fetch(`${server_url}upload_image?id=${data.id}`, {
+              method: 'POST',
+              body: formData,
+                
+              // 👇 Set headers manually for single file upload
+              headers: {
+                // 'content-type': 'multipart/form-data',
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+              },
+            })
+              .then((res) => res.json())
+              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data)})
+              .catch((err) => console.error(err));
+            })
           .catch((err) => console.error(err));
       };
 
@@ -47,7 +71,7 @@ function CreateView({add_lecture}) {
   return (
     <div className="createViewContainer">
       <div className="topBarWrapper">
-        <a href="/" className="close"><img  src={Clear}/></a>
+        <div onClick={()=>{nav('/')}} className="close"><img  src={Clear}/></div>
         <div className="addTitle ">Добавить Лекцию</div>
         <div className="spacer"/>
         </div>

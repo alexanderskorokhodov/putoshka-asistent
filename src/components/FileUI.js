@@ -8,6 +8,7 @@ export default function FileUI(
 ) {
   const [fileName, setFileName] = useState("")
   const [fileType, setFileType] = useState("")
+  const [im, setIm] = useState("")
   const onFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -22,8 +23,8 @@ export default function FileUI(
       //   setFileOrig(e.target.result);
       // };
       // setFileOrig(f);
-      reader.readAsDataURL(event.target.files[0]);
-      setFile(URL.createObjectURL(f));
+      setIm(URL.createObjectURL(f));
+      setFile(f);
     }
   };
 
@@ -55,7 +56,7 @@ export default function FileUI(
     fileUI = (
       <div className="uploaded">
         {alt === "" ? (
-          <img src={file} alt="error" onClick={() => fileRef.current.click()} />
+          <img src={im} alt="error" onClick={() => fileRef.current.click()} />
         ) : (
           alt
         )}
