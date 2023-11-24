@@ -1,0 +1,19 @@
+.App {
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+    .left {
+        width: 100%;
+        max-width: 25em;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        .header {
+            height: 42px;
+        }
+    }
+    .right {
+        width: 100%;
+        height: 100vh;
+    }
+}
