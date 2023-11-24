@@ -17,6 +17,7 @@ function Lectures({lectures, nav}) {
     (val) =>
     { 
       id_++;
+      console.log(val.data)
       return <LectureElement id={id_} title={val.title} date={val.FIO} theme={val.theme} short_desc={ val.data['short_descr'].length > 25 ?val.data['short_descr'].slice(0, 25)+'...' : val.data['short_descr'] } 
       nav={
         nav} data={val.data}

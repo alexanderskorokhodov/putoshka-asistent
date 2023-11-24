@@ -1,7 +1,7 @@
 import './styles/App.scss';
 import Header from './components/Header';
 import Lectures from './components/Lectures';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import CleanView from './components/CleanView';
 import CreateView from './components/CreateView';
 import React, {useState} from 'react';
@@ -48,18 +48,19 @@ function App() {
 
   return (
     <div className="App">
-      <div className='left'>
+      <div className={'left '+(window.location.pathname==="/" ?'aaal':'')}>
         <Header/>
         <Lectures nav={nav} lectures={lectures}/>
       </div>
-      <div className='right'>
+      <div className={'right '+(window.location.pathname==="/" ?'aaar':'')}>
           <Routes>
             <Route path="/" element={<CleanView/>} />
-            <Route path="/add" element={<CreateView nav={nav}add_lecture={add_lecture}/>} />
+            <Route path="/add" element={<CreateView nav={nav} add_lecture={add_lecture}/>} />
             <Route path="/lecture/:id" element={<LectureView lectures={lectures} nav={nav}/>} />
             <Route path="/glos/:id" element={<GlosView lectures={lectures} nav={nav}/>} />
           </Routes>
       </div>
+      {/* <GlosView/> */}
     </div>
   );
 }

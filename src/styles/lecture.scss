@@ -1,5 +1,6 @@
 @import "./variables.scss";
 .lecWrapper {
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -30,6 +31,15 @@
         flex-direction: column;
         .lecTitle {
             font-weight: 400;
+        }
+    }
+    @media (max-width: 25em) {
+        // flex-direction: column;
+        .lecShort {
+            display: none;
+        }
+        .lecThemeDate {
+            display: none;
         }
     }
 }

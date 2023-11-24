@@ -2,6 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import site_url from '../site'
 import "../styles/lecture.scss"
 
+
 function LectureElement({id, nav, theme, date, title, short_desc, data}) {
     const func = ()=>{fetch(site_url+"get_image/?id="+data.id, {
         method: 'GET',
@@ -20,7 +21,7 @@ function LectureElement({id, nav, theme, date, title, short_desc, data}) {
             reader.readAsDataURL(blob);
             reader.onloadend = function() {
                 let base64data = reader.result;
-                console.log(base64data);
+                // console.log(base64data);
                 setImg(URL.createObjectURL(blob))
 }
         })

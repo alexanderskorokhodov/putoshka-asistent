@@ -11,41 +11,41 @@ import FileLecture from "./LectureUpload";
 import { useParams } from "react-router-dom";
 
 function LectureView({lectures, nav}) {
-  const {id} = useParams();
+  let {id} = useParams();
   let lecture = lectures[id]
   const [isG, setG] = useState(false)
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
   console.log(lecture, id)
-  const [img, setImg] = useState('')
-  useEffect(()=>{
-
-  if (id >= lectures.length || id < 0) {
-    nav('/')
-    return
-    }
-    if (!img) {
-        fetch(site_url+"get_image/?id="+lecture.data.id, {
-        method: 'GET',
+  const [img_, setImg] = useState(<img alt="" src={""}/>)
+  useEffect(()=>
+    {
+        if (id >= lectures.length || id < 0) {
+            nav('/')
+            return
+        }
+        if (!isG) {
+            fetch(site_url+"get_image/?id="+lecture.data.id, {
+                method: 'GET',
           
-        headers: {
-          // 'content-type': 'multipart/form-data',
-          'Accept': 'image/png',
-          "ngrok-skip-browser-warning": "1",
-          'Access-Control-Allow-Origin': '*',
-        },
+                headers: {
+                    'Accept': 'image/png',
+                    "ngrok-skip-browser-warning": "1",
+                    'Access-Control-Allow-Origin': '*',
+                },
       })
         .then((res) => res.blob())
         .then((blob) => {
-            setImg(URL.createObjectURL(blob))
-}
-        )
+            setImg(<img alt="" src={URL.createObjectURL(blob)}/>)
+            setG(true)
+            })
         .catch((err) => console.error(err));
-    }}
-    )
+        }
+    }, [id]
+  )
   if (id >= lectures.length || id < 0) {
     nav('/')
     return
 }
-
 
   
   return (
@@ -57,14 +57,19 @@ function LectureView({lectures, nav}) {
         </div>
       
       <div className="container">
-        <div className="imgWrapper" ><img alt="" src={img}/></div>
+        <div className="imgWrapper" >{img_}</div>
         <div className="upinfo">
             <div className="up">{lecture.FIO} · {lecture.theme}</div>
-            <a download={lecture.title+".docx"}href={site_url+"get_docx?id="+lecture.data.id} className="button document">Скачать DOC</a>
-            
+            <div>
+            <a download={lecture.title+".docx"}href={site_url+"get_docx?id="+lecture.data.id} className="button document">DOCX</a>
+            <a download={lecture.title+".pdf"}href={site_url+"get_pdf?id="+lecture.data.id} className="button document">PDF</a>
+            </div>
         </div>
         <div>{lecture.data.short_descr}</div>
-        <div onClick={()=>{setG(!isG)}}className="glosWrapper button">Глоссарий</div>
+        <div onClick={()=>{
+            setG(false);
+            nav(`/glos/${id}`)
+            forceUpdate()}}className="glosWrapper button">Глоссарий</div>
      </div>
         
         

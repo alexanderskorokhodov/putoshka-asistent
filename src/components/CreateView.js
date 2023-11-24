@@ -21,7 +21,7 @@ function CreateView({add_lecture, nav}) {
         let formData = new FormData();
         formData.append('file', lecFile)
         // 👇 Uploading the file using the fetch API to the server
-        fetch(server_url+'upload_lecture', {
+        fetch(server_url+`upload_lecture?subject=${theme}&title=${title}`, {
           method: 'POST',
           body: formData,
 
@@ -71,7 +71,7 @@ function CreateView({add_lecture, nav}) {
   return (
     <div className="createViewContainer">
       <div className="topBarWrapper">
-        <div onClick={()=>{nav('/')}} className="close"><img  src={Clear}/></div>
+        <div onClick={()=>{nav('/')}} className="close"><img src={Clear}/></div>
         <div className="addTitle ">Добавить Лекцию</div>
         <div className="spacer"/>
         </div>
