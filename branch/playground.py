@@ -1,81 +1,46 @@
-import docx
+from docx.oxml import parse_xml, register_element_cls
+
+
 from docx import Document
-from pydub import AudioSegment
-import sys
-sys.path.append('/path/to/ffprobe')
-
-song = AudioSegment.from_mp3("11a7aeec-4a5c-439e-b729-224b6b43368a.mp3")
-ten_seconds = 10 * 1000 * 3
-
-first_10_seconds = song[:ten_seconds]
-
-last_5_seconds = song[-5000:]
-first_10_seconds.export("cut.mp3", format="mp3")
+from docx.shared import Inches, Pt, RGBColor
 
 
-# def get_or_create_hyperlink_style(d):
-#     """If this document had no hyperlinks so far, the builtin
-#        Hyperlink style will likely be missing and we need to add it.
-#        There's no predefined value, different Word versions
-#        define it differently.
-#        This version is how Word 2019 defines it in the
-#        default theme, excluding a theme reference.
-#     """
-#     if "Hyperlink" not in d.styles:
-#         if "Default Character Font" not in d.styles:
-#             ds = d.styles.add_style("Default Character Font",
-#                                     docx.enum.style.WD_STYLE_TYPE.CHARACTER,
-#                                     True)
-#             ds.element.set(docx.oxml.shared.qn('w:default'), "1")
-#             ds.priority = 1
-#             ds.hidden = True
-#             ds.unhide_when_used = True
-#             del ds
-#         hs = d.styles.add_style("Hyperlink",
-#                                 docx.enum.style.WD_STYLE_TYPE.CHARACTER,
-#                                 True)
-#         hs.base_style = d.styles["Default Character Font"]
-#         hs.unhide_when_used = True
-#         hs.font.color.rgb = docx.shared.RGBColor(0x05, 0x63, 0xC1)
-#         hs.font.underline = True
-#         del hs
-#
-#     return "Hyperlink"
-# def add_hyperlink(paragraph, text, url):
-#     # This gets access to the document.xml.rels file and gets a new relation id value
-#     part = paragraph.part
-#     r_id = part.relate_to(url, docx.opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
-#
-#     # Create the w:hyperlink tag and add needed values
-#     hyperlink = docx.oxml.shared.OxmlElement('w:hyperlink')
-#     hyperlink.set(docx.oxml.shared.qn('r:id'), r_id, )
-#
-#     # Create a new run object (a wrapper over a 'w:r' element)
-#     new_run = docx.text.run.Run(
-#         docx.oxml.shared.OxmlElement('w:r'), paragraph)
-#     new_run.text = text
-#
-#     # Set the run's style to the builtin hyperlink style, defining it if necessary
-#     new_run.style = get_or_create_hyperlink_style(part.document)
-#     # Alternatively, set the run's formatting explicitly
-#     # new_run.font.color.rgb = docx.shared.RGBColor(0, 0, 255)
-#     # new_run.font.underline = True
-#
-#     # Join all the xml elements together
-#     hyperlink.append(new_run._element)
-#     paragraph._p.append(hyperlink)
-#     return hyperlink
-#
-# document = docx.Document()
-# p = document.add_paragraph('A plain paragraph having some ')
-# add_hyperlink(p, 'Link to my site', "http://supersitedelamortquitue.fr")
-# document.save('demo_hyperlink.docx')
-#
-# #This is only needed if you're using the builtin style above
-#
-#
-# doc = Document()
-# paragraph = doc.add_paragraph()
-#
-# add_hyperlink(paragraph, "DFFFFF", "DFDDDDDD")
-# doc.save(f"lol.docx")
+# refer to docx.oxml.shape.CT_Inline
+
+document = Document()
+
+def createTitlePage(header, subtitle, img_src):
+    register_element_cls('wp:anchor', CT_Anchor)
+    p = document.add_paragraph()
+    add_float_picture(p, img_src, width=Inches(15.0), pos_x=Pt(0), pos_y=Pt(0))
+    paragraph = document.add_heading(header)
+    run = paragraph.runs[0]
+    font = run.font
+    font.color.rgb = RGBColor(255, 255, 255)  # font.size = Pt(35)
+    font.name = 'IBM Plex Sans'  # Set the font name
+    font.bold = True
+    font.size = Pt(45)
+    paragraph.paragraph_format.space_before = Pt(100)  # Размер отступа в точках
+
+    paragraph = document.add_heading()
+    run = paragraph.add_run(subtitle)
+    font = run.font
+    font.size = Pt(30)
+    font.name = 'IBM Plex Sans'  # Set the font name
+    font.bold = True
+    font.color.rgb = RGBColor(100, 75, 135)    # font.size = Pt(35)
+    paragraph.paragraph_format.space_before = Pt(20)  # Размер отступа в точках
+
+def makeHeader(text):
+    paragraph = document.add_heading()
+    run = paragraph.add_run(text)
+    font = run.font
+    font.size = Pt(22)
+    font.name = 'IBM Plex Sans'  # Set the font name
+    font.bold = True
+
+createTitlePage("Введение", "Знакомство с языками программирования", "../doc_back.png")
+document.add_page_break()
+makeHeader("Введение")
+
+document.save('output.docx')

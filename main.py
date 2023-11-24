@@ -35,7 +35,7 @@ async def getImage(id: str):
 
 @app.get("/get_docx")
 async def getDocx(id: str):
-    img_path = lectureRepository.getImageFilePath(id)
+    img_path = lectureRepository.getDocxFilePath(id)
     return FileResponse(img_path, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document", filename=f"{id}.docx")
 
 @app.get("/get_pdf")
