@@ -115,6 +115,30 @@
             padding: 0.4em 0;
             border-radius: 10px;
         }
+        .not {
+            // border: 2px solid #00000010;
+            background: #00000010;
+            cursor: default;
+        }
+        .lecUpload {
+            .lecUpBtn {
+                cursor: pointer;
+                margin-top: 1em;
+                border: 2px solid #8D5EF2;
+                color: $bright;
+                fill: $bright;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                padding: 0.4em 0;
+                border-radius: 10px;
+                appearance: none;
+                margin-bottom: 0.5em;
+            }
+            .lecUpBtn>*:first-child {
+                margin-right: 0.5em;
+            }
+        }
     }
     .createViewContainer>* {
         margin-top: 20px;

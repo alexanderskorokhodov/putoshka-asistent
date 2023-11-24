@@ -1,16 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import FileIcon from "../components/FileIcon";
 
 export default function FileUI(
   {fileRef,
   file,
-  fileName,
-  fileType,
-  setFileName,
-  setFile,
-  setFileType,
-  setFileOrig}
+  setFile}
 ) {
+  const [fileName, setFileName] = useState("")
+  const [fileType, setFileType] = useState("")
   const onFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -24,7 +21,7 @@ export default function FileUI(
       // reader.onload = function(e) {
       //   setFileOrig(e.target.result);
       // };
-      setFileOrig(f);
+      // setFileOrig(f);
       reader.readAsDataURL(event.target.files[0]);
       setFile(URL.createObjectURL(f));
     }
