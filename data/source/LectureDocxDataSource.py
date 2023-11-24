@@ -1,7 +1,13 @@
+import os
+
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Inches, Pt
+import aspose.words as aw
+from docx2pdf import convert
+
+
 
 
 class LectureDocxDataSource:
@@ -95,3 +101,15 @@ class LectureDocxDataSource:
 
     def saveDocx(self, id):
         self.doc.save(f"uploaded_docx/{id}.docx")
+
+    def convertDocxToPdf(sef, id):
+
+        convert(f"uploaded_docx/{id}.docx")
+        convert(f"uploaded_docx/{id}.docx", f"uploaded_docx/{id}.pdf")
+        convert("my_docx_folder/")
+
+
+
+
+test = LectureDocxDataSource(Document())
+test.convertDocxToPdf("688904ad-c7ed-4ab6-9bb8-616179dbb1f9")

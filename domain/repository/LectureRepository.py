@@ -18,7 +18,6 @@ class LectureRepository:
 
         preparedText = [[section[0], self.lectureTextDataSource.textTransformationForDocs(section[1], terms)] for section in text]
 
-        print(preparedText)
 
         self.lectureFileDataSource.makeLectureDocs(text=preparedText, terms=terms)
 

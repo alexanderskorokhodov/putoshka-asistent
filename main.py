@@ -1,11 +1,20 @@
 from typing import Union
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
-
+import urllib3
 from domain.repository.LectureRepository import LectureRepository
+from fastapi.middleware.cors import CORSMiddleware
+from docx2pdf import convert
 
 app = FastAPI()
 lectureRepository = LectureRepository()
+
+urllib3.disable_warnings()
+origins = ["*"]
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"],
+                   allow_headers=["*"])
+
+
 @app.post("/upload_lecture")
 async def uploadLecture(file: UploadFile):
     contents = await file.read()

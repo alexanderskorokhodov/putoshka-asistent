@@ -17,7 +17,6 @@ class LectureTextDataSource:
     def checkWordIsTerm(self, word, terms):
         preparedTerms = [self.getSimpleWord(self.cleanText(item[0])) for item in terms]
         preparedWord = self.getSimpleWord(self.cleanText(word))
-        print(preparedWord)
 
         return preparedWord in preparedTerms
 
