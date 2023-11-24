@@ -41,4 +41,4 @@ async def getDocx(id: str):
 @app.get("/get_pdf")
 async def getPdf(id: str):
     img_path = lectureRepository.getPdfFile(id)
-    return FileResponse(img_path, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document", filename=f"{id}.pdf")
+    return FileResponse(img_path, filename=f"{id}.pdf")

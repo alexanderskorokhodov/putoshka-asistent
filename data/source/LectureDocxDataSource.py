@@ -237,8 +237,5 @@ class LectureDocxDataSource:
         self.doc.save(f"uploaded_docx/{id}.docx")
 
     def convertDocxToPdf(sef, id):
-
-        convert(f"uploaded_docx/{id}.docx")
         convert(f"uploaded_docx/{id}.docx", f"uploaded_docx/{id}.pdf")
-        convert("my_docx_folder/")
 
