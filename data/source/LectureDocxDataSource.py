@@ -124,31 +124,17 @@ class LectureDocxDataSource:
         run._r.add_drawing(anchor)
 
     def makeShortContent(self, shortContentItems):
-        table = self.doc.add_table(rows=len(shortContentItems), cols=2)
 
         # Set the width of each cell to half of the document width
-        table.autofit = False
-        table.columns[0].width = Inches(10)  # Adjust the width as needed
-        table.columns[1].width = Inches(10)  # Adjust the width as needed
-
         for i in range(len(shortContentItems)):
-            cell1 = table.cell(i, 0)
-            cell1.text = shortContentItems[i][0]
+            paragraph = self.doc.add_paragraph()
+            run = paragraph.add_run(f"{i+1}. {shortContentItems[i][0]}")
+            font = run.font
+            font.size = Pt(14)  # Set the font size
+            font.name = 'IBM Plex Sans'  # Set the font name
+            font.bold = True
+            paragraph.paragraph_format.space_before = Pt(15)  # Размер отступа в точках
 
-            for paragraph in cell1.paragraphs:
-
-                for run in paragraph.runs:
-                    run.font.size = Pt(12)
-                    run.font.name = "IBM Plex Sans"
-                    run.font.bold = True
-
-            cell2 = table.cell(i, 1)
-            cell2.text = shortContentItems[i][1]
-            for paragraph in cell2.paragraphs:
-                for run in paragraph.runs:
-                    run.font.size = Pt(12)
-                    run.font.name = "IBM Plex Sans"
-                    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
 
     def makeSubtitle(self, text):
         paragraph = self.doc.add_paragraph()
@@ -159,7 +145,7 @@ class LectureDocxDataSource:
         font.bold = True
 
     def makeTermsSection(self, terms):
-        self.makeSubtitle("Термины, используемые в лекции")
+        self.makeHeader("Термины, используемые в лекции")
 
         for item in terms:
             paragraph = self.doc.add_paragraph()
@@ -178,7 +164,7 @@ class LectureDocxDataSource:
 
 
     def makeHeader(self, text):
-        paragraph = self.doc.add_paragraph()
+        paragraph = self.doc.add_heading()
         run = paragraph.add_run(text)
         font = run.font
         font.size = Pt(22)
@@ -212,7 +198,6 @@ class LectureDocxDataSource:
         self.makeHeader("Оглавление")
         shortContests = [[item[0], "0"] for item in text]
         self.makeShortContent(shortContests)
-
         self.makeTermsSection(terms=terms)
         for section in text:
             self.doc.add_page_break()
