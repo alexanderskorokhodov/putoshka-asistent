@@ -1,13 +1,15 @@
 import os
 
 from docx import Document
+from docx.enum.dml import MSO_THEME_COLOR_INDEX
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.opc.oxml import qn
+from docx.oxml import OxmlElement
 from docx.shared import Inches, Pt
 import aspose.words as aw
 from docx2pdf import convert
-
-
+from pdf2docx.common import docx
 
 
 class LectureDocxDataSource:
@@ -28,6 +30,7 @@ class LectureDocxDataSource:
             cell1.text = shortContentItems[i][0]
 
             for paragraph in cell1.paragraphs:
+
                 for run in paragraph.runs:
                     run.font.size = Pt(12)
                     run.font.name = "IBM Plex Sans"
@@ -53,7 +56,6 @@ class LectureDocxDataSource:
         self.makeSubtitle("Термины, используемые в лекции")
 
         for item in terms:
-            print(item)
             paragraph = self.doc.add_paragraph()
             run = paragraph.add_run(item[0] + " ")
             font = run.font
@@ -79,14 +81,27 @@ class LectureDocxDataSource:
 
     def makeTextWithBoldWords(self, words, paragraph):
         for item in words:
-            print(item)
             run = paragraph.add_run(item[0])
             font = run.font
             font.size = Pt(12)  # Set the font size
             font.name = 'IBM Plex Sans'  # Set the font name
             font.bold = item[1]
 
-    def makeLectureDocs(self, text, terms):
+    def setBackgroundImage(self, image_path):
+        # Add a section to the document
+
+
+        self.doc.sections[0].left_margin = Inches(0.3)
+        self.doc.add_picture(image_path, width=Inches(8.0))
+
+        new_section = self.doc.add_section()
+        new_section.left_margin = Inches(1.0)
+        # run = self.doc.add_run()
+        # run.add_picture(image_path, width=Inches(8))
+
+    def makeLectureDocs(self, text, terms, image_path):
+
+        self.setBackgroundImage("doc.png")
 
         self.makeHeader("Оглавление")
         shortContests = [[item[0], "0"] for item in text]
@@ -94,7 +109,6 @@ class LectureDocxDataSource:
 
         self.makeTermsSection(terms=terms)
         for section in text:
-            print(section)
             self.makeHeader(section[0])
             paragraph = self.doc.add_paragraph()
             self.makeTextWithBoldWords(section[1], paragraph)
@@ -108,8 +122,3 @@ class LectureDocxDataSource:
         convert(f"uploaded_docx/{id}.docx", f"uploaded_docx/{id}.pdf")
         convert("my_docx_folder/")
 
-
-
-
-test = LectureDocxDataSource(Document())
-test.convertDocxToPdf("688904ad-c7ed-4ab6-9bb8-616179dbb1f9")

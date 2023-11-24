@@ -14,12 +14,12 @@ class LectureRepository:
     lectureNeuronDataSource = LectureNeuronDataSource()
 
 
-    def createLectureDocs(self, terms, text):
+    def createLectureDocs(self, terms, text, lec_id):
 
         preparedText = [[section[0], self.lectureTextDataSource.textTransformationForDocs(section[1], terms)] for section in text]
 
 
-        self.lectureFileDataSource.makeLectureDocs(text=preparedText, terms=terms)
+        self.lectureFileDataSource.makeLectureDocs(text=preparedText, terms=terms, image_path=self.getImageFilePath(lec_id))
 
 
     def getLectureInfo(self, file):
@@ -32,7 +32,7 @@ class LectureRepository:
         text = data["text"]
         shortDescr = data["short_descr"]
 
-        self.createLectureDocs(terms=terms, text=text)
+        self.createLectureDocs(terms=terms, text=text, lec_id=id)
         self.lectureFileDataSource.saveDocx(id)
 
         return {
@@ -51,3 +51,11 @@ class LectureRepository:
     def getDocxFilePath(self, id):
         return f"uploaded_docx/{id}.docx"
 
+    def getPdfFile(self, id):
+        self.lectureFileDataSource.convertDocxToPdf(id)
+        return f"uploaded_docx/{id}.pdf"
+
+    def getCutAudio(self, start, end, id):
+        name = f"uploaded_mp3/{id}.mp3"
+        self.lectureLocalDataSource.cutAudioFile(start, end, name)
+        return f"cut_mp3/{id}"

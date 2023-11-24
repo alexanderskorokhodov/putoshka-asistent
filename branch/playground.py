@@ -1,13 +1,81 @@
-from domain.repository.LectureRepository import LectureRepository
+import docx
+from docx import Document
+from pydub import AudioSegment
+import sys
+sys.path.append('/path/to/ffprobe')
 
-textRepository = LectureRepository()
+song = AudioSegment.from_mp3("11a7aeec-4a5c-439e-b729-224b6b43368a.mp3")
+ten_seconds = 10 * 1000 * 3
 
-text = [
-    ["Почему именно С#?", "Друзья, я думаю, что многие из вас при просмотре программы курса задались вопросом: почему именно C# был выбран в качестве основного инструмента? Командой GeekBrains было рассмотрено несколько наиболее популярных языков программирования, представленных на экране.На текущем уровне изучения программирования все задачи курса будут решаться одинаково на любом из представленных языков. Отличия будут совершенно незначительны. Написав программу на одном из них, вы всегда сможете переписать ее на другой, изменив только синтаксис. Давайте рассмотрим критерии, по которым язык C# был выбран для текущего курса. "],
-    ["Подготовка окружения", "Друзья, отмечу, что наиболее приоритетный вариант настройки окружения – это самостоятельная установка и настройка инструментов разработчика. Однако, если у вас возникнут существенные трудности при настройке окружения, то есть альтернативный вариант. Он заключается в использовании облачного сервиса, который предоставит вам удаленный рабочий стол с установленным Git, .NET и Visual Studio Code. Подключиться и работать с этим сервисом можно напрямую из браузера.Этим сервисом можно воспользоваться в случае, если ваше аппаратное обеспечение не позволяет установить необходимые инструменты. Инструкции по работе с этим сервисом будут также прикреплены к описанию лекции.[Скрин-каст]Сейчас мы рассмотрим процесс настройки окружения. Проделывать это одновременно со мной не нужно, рекомендую внимательно посмотреть, а после лекции можно будет проделать эти шаги самостоятельно.Для установки платформы .NET нам потребуется проделать следующие шаги:перейдем на сайт загрузки установщика платформы .NET (https://dotnet.microsoft.com/en-us/download/dotnet/7.0)загрузим и запустим установщик для вашей платформы. В большинстве случаев это будет 64-разрядный установщик, вам нужно будет выбрать только архитектуру.редактор Visual Studio Code могут быть установлены расширения для удобства разработки. Эти расширения добавляют в редактор подсветку синтаксиса, подсказки разработчику и другие полезные возможности. Откроем Visual Studio Code и для установки расширения откроем соответствующую панель, введем в поиске «C#» и выберем расширение C# for Visual Studio Code (оно будет первым в списке). Для его установки нажмем кнопку Install.На данном этапы мы готовы к написанию программ на C#. В качестве первой программы предлагаю реализовать вывод сообщения «Hello, World!» на экран. О такой программе вы наверняка уже слышали, а может быть, даже её писали. В большинстве случаев, она используется для того, чтобы понять, правильно ли настроено ваше окружение."]
-]
-terms = [
-    ["думаю", "область памяти, предназначения для хранения некоторого значения."],
-    ["возникнут", "способом определения типа данных языком программирования."]
-]
-textRepository.createLectureDocs(terms=terms, text=text)
+first_10_seconds = song[:ten_seconds]
+
+last_5_seconds = song[-5000:]
+first_10_seconds.export("cut.mp3", format="mp3")
+
+
+# def get_or_create_hyperlink_style(d):
+#     """If this document had no hyperlinks so far, the builtin
+#        Hyperlink style will likely be missing and we need to add it.
+#        There's no predefined value, different Word versions
+#        define it differently.
+#        This version is how Word 2019 defines it in the
+#        default theme, excluding a theme reference.
+#     """
+#     if "Hyperlink" not in d.styles:
+#         if "Default Character Font" not in d.styles:
+#             ds = d.styles.add_style("Default Character Font",
+#                                     docx.enum.style.WD_STYLE_TYPE.CHARACTER,
+#                                     True)
+#             ds.element.set(docx.oxml.shared.qn('w:default'), "1")
+#             ds.priority = 1
+#             ds.hidden = True
+#             ds.unhide_when_used = True
+#             del ds
+#         hs = d.styles.add_style("Hyperlink",
+#                                 docx.enum.style.WD_STYLE_TYPE.CHARACTER,
+#                                 True)
+#         hs.base_style = d.styles["Default Character Font"]
+#         hs.unhide_when_used = True
+#         hs.font.color.rgb = docx.shared.RGBColor(0x05, 0x63, 0xC1)
+#         hs.font.underline = True
+#         del hs
+#
+#     return "Hyperlink"
+# def add_hyperlink(paragraph, text, url):
+#     # This gets access to the document.xml.rels file and gets a new relation id value
+#     part = paragraph.part
+#     r_id = part.relate_to(url, docx.opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
+#
+#     # Create the w:hyperlink tag and add needed values
+#     hyperlink = docx.oxml.shared.OxmlElement('w:hyperlink')
+#     hyperlink.set(docx.oxml.shared.qn('r:id'), r_id, )
+#
+#     # Create a new run object (a wrapper over a 'w:r' element)
+#     new_run = docx.text.run.Run(
+#         docx.oxml.shared.OxmlElement('w:r'), paragraph)
+#     new_run.text = text
+#
+#     # Set the run's style to the builtin hyperlink style, defining it if necessary
+#     new_run.style = get_or_create_hyperlink_style(part.document)
+#     # Alternatively, set the run's formatting explicitly
+#     # new_run.font.color.rgb = docx.shared.RGBColor(0, 0, 255)
+#     # new_run.font.underline = True
+#
+#     # Join all the xml elements together
+#     hyperlink.append(new_run._element)
+#     paragraph._p.append(hyperlink)
+#     return hyperlink
+#
+# document = docx.Document()
+# p = document.add_paragraph('A plain paragraph having some ')
+# add_hyperlink(p, 'Link to my site', "http://supersitedelamortquitue.fr")
+# document.save('demo_hyperlink.docx')
+#
+# #This is only needed if you're using the builtin style above
+#
+#
+# doc = Document()
+# paragraph = doc.add_paragraph()
+#
+# add_hyperlink(paragraph, "DFFFFF", "DFDDDDDD")
+# doc.save(f"lol.docx")

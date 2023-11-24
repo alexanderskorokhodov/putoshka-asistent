@@ -5,6 +5,8 @@ import urllib3
 from domain.repository.LectureRepository import LectureRepository
 from fastapi.middleware.cors import CORSMiddleware
 from docx2pdf import convert
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 lectureRepository = LectureRepository()
@@ -14,7 +16,7 @@ origins = ["*"]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"],
                    allow_headers=["*"])
 
-
+app.mount("/uploaded_images", StaticFiles(directory="uploaded_images"), name='uploaded_images')
 @app.post("/upload_lecture")
 async def uploadLecture(file: UploadFile):
     contents = await file.read()
@@ -34,4 +36,9 @@ async def getImage(id: str):
 @app.get("/get_docx")
 async def getDocx(id: str):
     img_path = lectureRepository.getImageFilePath(id)
-    return FileResponse(img_path, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document", filename=f"{id}.mp3")
+    return FileResponse(img_path, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document", filename=f"{id}.docx")
+
+@app.get("/get_pdf")
+async def getPdf(id: str):
+    img_path = lectureRepository.getPdfFile(id)
+    return FileResponse(img_path, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document", filename=f"{id}.pdf")
