@@ -191,9 +191,9 @@ class LectureDocxDataSource:
         # run = self.doc.add_run()
         # run.add_picture(image_path, width=Inches(8))
 
-    def makeLectureDocs(self, text, terms, image_path):
+    def makeLectureDocs(self, text, terms, image_path, title, subject):
 
-        self.createTitlePage("Введение", "Знакомство с языками программирования", "doc_back.png")
+        self.createTitlePage(title, subject, "doc_back.png")
         self.doc.add_page_break()
         self.makeHeader("Оглавление")
         shortContests = [[item[0], "0"] for item in text]

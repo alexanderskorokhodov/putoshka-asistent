@@ -18,9 +18,14 @@ app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True
 
 app.mount("/uploaded_images", StaticFiles(directory="uploaded_images"), name='uploaded_images')
 @app.post("/upload_lecture")
-async def uploadLecture(file: UploadFile):
+async def uploadLecture(title:str, subject:str, file: UploadFile):
     contents = await file.read()
-    data = lectureRepository.getLectureInfo(contents)
+
+    print("########################")
+    print(title + "    " + subject)
+    print("########################")
+
+    data = lectureRepository.getLectureInfo(contents, title, subject)
     return data
 
 @app.post("/upload_image")
@@ -42,3 +47,9 @@ async def getDocx(id: str):
 async def getPdf(id: str):
     img_path = lectureRepository.getPdfFile(id)
     return FileResponse(img_path, filename=f"{id}.pdf")
+
+@app.get("/get_voice_term")
+async def getPdf(start: str, end: str, id: str):
+    img_path = lectureRepository.getCutAudio(start, end, id)
+    return FileResponse(img_path, filename=f"{id}.mp3")
+

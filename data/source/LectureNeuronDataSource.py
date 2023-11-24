@@ -1,4 +1,5 @@
 class LectureNeuronDataSource:
+
     def getLectureInfo(self, id):
 
         src = f"uploaded_docx/{id}.mp3"
