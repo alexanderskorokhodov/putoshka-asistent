@@ -3,9 +3,11 @@
     flex-direction: row;
     // align-items: center;
     // justify-content: center;
-    padding: 1em;
+    // margin: 1em;
+    width: 100%;
     .left {
-        width: 100%;
+        padding: 1em;
+        width: calc(100% - 2em);
         // max-width: 27em;
         height: 100vh;
         display: flex;
@@ -19,8 +21,9 @@
         position: fixed;
     }
     .right {
+        padding: 1em;
         width: 100%;
-        // height: 100vh;
+        min-height: 100vh;
     }
 }
 

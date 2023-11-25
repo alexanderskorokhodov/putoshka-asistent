@@ -4,18 +4,22 @@ import SearchIcon from "../icons/SearchIcon.svg"
 import Settings from "../icons/Settings.svg"
 import Clear from "../icons/CloseBig.svg"
 import Edit from "../icons/Edit.svg"
+import FileIcon from "./FileIcon";
 import site_url from "../site"
 
 import "../styles/lectureview.scss"
 import FileUI from "./FileUI";
 import FileLecture from "./LectureUpload";
 import { useParams } from "react-router-dom";
+import ContentLoader from "react-content-loader";
 
 function LectureView({lectures, nav, id}) {
   let lecture = lectures[id]
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   // console.log(lecture, id)
-  const [img_, setImg] = useState(<img alt="" src={""}/>)
+  const [img_, setImg] = useState(<ContentLoader speed={2}
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb" style={{width: "calc(100% - 0.3em)", borderRadius:"10px",marginBottom:"1em",height:"15em", display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center", border: "2px dashed #818C99"}}> <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" /></ContentLoader>)
   useEffect(()=>
     {
         if (id >= lectures.length || id < 0) {
@@ -49,8 +53,9 @@ function LectureView({lectures, nav, id}) {
       <div className="topBarWrapper">
         <div onClick={()=>{nav(`/`)}} className="close c"><img src={Clear}/></div>
         <div className="addTitle ">{lecture.title}</div>
-        <div onClick={()=>{nav(`/edit_lecture/${id}`)}} className="edit c">
-          <img src={Edit}/></div>
+        <div className="edit c" onClick={()=>{nav(`/edit_lecture/${id}`)}}>
+          <img src={Edit}/>
+        </div>
         </div>
       
       <div className="container">

@@ -56,9 +56,9 @@ function CreateView({add_lecture, nav, lectures}) {
               },
             })
               .then((res) => res.json())
-              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data, `/lecture/${lectures.length-1}`);
+              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data, `/lecture?id=${lectures.length-1}`);
                 setLoading(false);
-              nav(`/lecture/${lectures.length}`)})
+              nav(`/lecture?id=${lectures.length}`)})
               .catch((err) => {console.error(err);setLoading(false)});
             })
           .catch((err) => {console.error(err);setLoading(false)});
@@ -77,7 +77,7 @@ function CreateView({add_lecture, nav, lectures}) {
       {isLoading? <div style={{display: "flex", flexDirection: "row", height: "100vh",alignItems: "center", justifyContent: "space-around"}}>Загружаем лекцию..</div> : [<div className="topBarWrapper">
         <div onClick={()=>{nav('/')}} className="close"><img src={Clear}/></div>
         <div className="addTitle ">Добавить Лекцию</div>
-        <div className="spacer"/>
+        <div className="c"/>
         </div>,
       
       <div className="container">

@@ -1,11 +1,12 @@
 @import "./variables.scss";
 .right {
-    padding-left: 1em;
+    // padding-left: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: calc(100% - 4em);
     .lectureViewContainer {
-        max-width: 35em;
+        width: 100%;
         .topBarWrapper {
             margin-bottom: 20px;
             display: flex;
@@ -25,6 +26,7 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                color: black;
                 // flex: 1;
                 img {
                     height: 24px;
@@ -85,6 +87,7 @@
             }
             .input->*:first-child {
                 margin-bottom: 0.5em;
+                // font-size: 22px;
             }
             input {
                 font-size: 25px;

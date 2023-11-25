@@ -11,9 +11,15 @@ import "../styles/lectures.scss"
 function Lectures({lectures, nav}) {
 
   const [settings, setSettings] = useState(false);
+  const [searchProp, setSearchProp] = useState('')
 
   let id_ = -1;
-  const lecView = lectures.map(
+      
+  let FIOs = [...new Set(lectures.map((value)=>value.FIO))]
+  let themes = [...new Set(lectures.map((value)=>value.theme))]
+  const [chosenF, setChosenF] = useState(FIOs)
+  const [chosenT, setChosenT] = useState(themes)
+  const lecView = lectures.filter((e)=>chosenF.includes(e.FIO) && chosenT.includes(e.theme) && e.data.short_descr.includes(searchProp)).map(
     (val) =>
     { 
       id_++;
@@ -26,11 +32,6 @@ function Lectures({lectures, nav}) {
     }
 
   )
-      
-  let FIOs = [...new Set(lectures.map((value)=>value.FIO))]
-  let themes = [...new Set(lectures.map((value)=>value.theme))]
-  const [chosenF, setChosenF] = useState(FIOs)
-  const [chosenT, setChosenT] = useState(themes)
 
   console.log(FIOs, themes)
 
@@ -41,9 +42,9 @@ function Lectures({lectures, nav}) {
       <div className="search">
       <div className="srchBrWrapper">
         <img src={SearchIcon} alt=""/>
-        <input placeholder="Поиск"/>
-        <img src={Settings} alt="" onClick={()=>{setSettings(!settings)}}/>
-        <img src={Clear} alt=""/>
+        <input placeholder="Поиск" value={searchProp} onChange={(e)=>{setSearchProp(e.target.value)}}/>
+        <img src={Settings} className="c" alt="" onClick={()=>{setSettings(!settings)}}/>
+        <img src={Clear} className="c" onClick={()=>{setSearchProp('')}} alt=""/>
       </div>
       {settings ? <div className="filters">
         <div className="fios">
@@ -51,11 +52,11 @@ function Lectures({lectures, nav}) {
           <div className="list">
           {FIOs.map((v, i)=>{return <div className="el">
               
-              <input type="checkbox" checked={chosenF.indexOf(themes[i]) !== -1} onChange={()=>
-              {if (chosenF.indexOf(themes[i]) !== -1){
+              <input type="checkbox" checked={chosenF.indexOf(FIOs[i]) !== -1} onChange={()=>
+              {if (chosenF.indexOf(FIOs[i]) !== -1){
                   setChosenF(chosenF.filter(a => a !== v))
                 } else {
-                  setChosenF([...chosenF, themes[i]])
+                  setChosenF([...chosenF, FIOs[i]])
                 }
             }}/>{[v]}
             </div>})}

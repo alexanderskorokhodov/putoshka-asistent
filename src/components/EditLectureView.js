@@ -63,8 +63,8 @@ function LectureView({setLectures, lectures, nav}) {
         <div className="imgWrapper" >{img_}</div>
         <div className="upinfo">
             <div className="up">
-                <div className="input-">ФИО<input className="fio"   onChange={(e)=>{setFIO(e.target.value)}} defaultValue={FIO}/></div>
-                <div className="input-">Тема<input className="theme"  onChange={(e)=>{setTheme(e.target.value)}} defaultValue={theme}/>
+                <div className="input-"><div>ФИО</div><input className="fio"   onChange={(e)=>{setFIO(e.target.value)}} defaultValue={FIO}/></div>
+                <div className="input-"><div>Тема</div><input className="theme"  onChange={(e)=>{setTheme(e.target.value)}} defaultValue={theme}/>
                 </div>
                 </div>
             

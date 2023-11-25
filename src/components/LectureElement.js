@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useReducer } from "react";
 import site_url from '../site'
 import "../styles/lecture.scss"
+import ContentLoader from "react-content-loader";
 
 
 function LectureElement({id, nav, theme, date, title, short_desc, data}) {
@@ -34,9 +35,11 @@ function LectureElement({id, nav, theme, date, title, short_desc, data}) {
     {func();forceUpdate()}, id)
 
     return <div onClick={()=>{func();nav('/lecture?id='+id)}} className="lecWrapper" key={data.id}>
-        <div className="lecImgWrapper"> 
-            <img className="lecImg" src={img} alt="image" />
-        </div>
+        <ContentLoader speed={2}
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb" className="lecImgWrapper"> 
+            <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" /><img className="lecImg" src={img} alt="image" />
+        </ContentLoader>
         <div className="lecDesc">
             <div className="lecTitle">{title}</div>
             <div className="lecShort light-text">{short_desc}</div>

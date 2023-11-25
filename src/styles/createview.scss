@@ -1,7 +1,9 @@
 @import "./variables.scss";
 .right {
-    padding-left: 1em;
+    // padding-left: 1em;
+    width: calc(100% - 2em);
     .createViewContainer {
+        width: 100%;
         .topBarWrapper {
             display: flex;
             flex-direction: row;
@@ -26,13 +28,14 @@
                     height: 24px;
                 }
             }
-            .spacer {
-                width: 24px;
-                height: 24px;
-            }
         }
-        .topBarWrapper>* {
-            // flex: 1;
+        .c {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .uploadbutton {
             border: 2px dashed $black;
