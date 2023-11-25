@@ -58,8 +58,8 @@ class LectureRepository:
         return f"uploaded_docx/{id}.pdf"
 
     def getCutAudio(self, start, end, id):
-        name = f"uploaded_mp3/{id}.mp3"
+        name = f"{id}.mp3"
         self.lectureLocalDataSource.cutAudioFile(start, end, name)
-        return f"cut_mp3/{id}"
+        return f"cut_mp3/{id}.mp3"
 
 

@@ -12,8 +12,13 @@ class LectureLocalDataSource:
         return str(unique_id)
 
     def cutAudioFile(self, start, end, name):
-        song = AudioSegment.from_mp3(name)
-        cutting = song[-(end * 1000):start * 1000]
+        current_directory = os.getcwd()
+        print(current_directory + " ###########")
+        song = AudioSegment.from_mp3(f"{current_directory}/uploaded_mp3/{name}")
+        ten_seconds = 10 * 5000
 
-        cutting.export(f"cut_mp3/{name}", format="mp3")
+        first_10_seconds = song[int(start)*10:int(end)*10]
+
+        first_10_seconds.export(f"{current_directory}/cut_mp3/{name}", format="mp3")
+
 

@@ -21,10 +21,6 @@ app.mount("/uploaded_images", StaticFiles(directory="uploaded_images"), name='up
 async def uploadLecture(title:str, subject:str, file: UploadFile):
     contents = await file.read()
 
-    print("########################")
-    print(title + "    " + subject)
-    print("########################")
-
     data = lectureRepository.getLectureInfo(contents, title, subject)
     return data
 
