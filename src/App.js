@@ -43,7 +43,7 @@ function App() {
   let id = Number(searchParams.get('id'))
 
   const add_lecture = (data, FIO, title, theme)=>{
-    setLectures([...lectures, {data: data, FIO: FIO, theme:theme, title:title}])
+    setLectures([...lectures, {data: data, FIO: FIO, featured: false, theme:theme, title:title}])
   }
   const nav = useNavigate()
 
@@ -59,7 +59,7 @@ function App() {
           <Routes>
             <Route path="/" element={<CleanView/>} />
             <Route path="/add" element={<CreateView nav={nav} lectures={lectures} add_lecture={add_lecture}/>} />
-            <Route path="/lecture/" element={<LectureView lectures={lectures} nav={nav} id={id}/>} />
+            <Route path="/lecture/" element={<LectureView setLectures={setLectures} lectures={lectures} nav={nav} id={id}/>} />
             <Route path="/edit_lecture/:id" element={<EditLectureView setLectures = {setLectures} lectures={lectures} nav={nav}/>} />
             <Route path="/glos/:id" element={<GlosView lectures={lectures} nav={nav}/>} />
           </Routes>

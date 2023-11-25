@@ -5,6 +5,8 @@ import Settings from "../icons/Settings.svg"
 import Clear from "../icons/CloseBig.svg"
 import Edit from "../icons/Edit.svg"
 import FileIcon from "./FileIcon";
+import Heart from "../icons/Union.svg"
+import HeartFill from "../icons/Union3.svg"
 import site_url from "../site"
 
 import "../styles/lectureview.scss"
@@ -13,7 +15,7 @@ import FileLecture from "./LectureUpload";
 import { useParams } from "react-router-dom";
 import ContentLoader from "react-content-loader";
 
-function LectureView({lectures, nav, id}) {
+function LectureView({lectures, nav, id, setLectures}) {
   let lecture = lectures[id]
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   // console.log(lecture, id)
@@ -47,7 +49,7 @@ function LectureView({lectures, nav, id}) {
     return
 }
 
-  
+  console.log(lecture)
   return (
     <div className="lectureViewContainer">
       <div className="topBarWrapper">
@@ -61,7 +63,9 @@ function LectureView({lectures, nav, id}) {
       <div className="container">
         <div className="imgWrapper" >{img_}</div>
         <div className="upinfo">
-            <div className="up">{lecture.FIO} · {lecture.theme}</div>
+            <div className="up">{lecture.FIO} · {lecture.theme} <img onClick={()=>{lecture.featured = !lecture.featured;let y = lectures;y[id] = lecture; setLectures(y);
+
+            }} src={lecture.featured ? Heart : HeartFill} alt=""/></div>
             <div>
             <a download={lecture.title+".docx"}href={site_url+"get_docx?id="+lecture.data.id} className="button document">DOCX</a>
             <a download={lecture.title+".pdf"}href={site_url+"get_pdf?id="+lecture.data.id} className="button document">PDF</a>
