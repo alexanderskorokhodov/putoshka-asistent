@@ -1,6 +1,5 @@
 import uuid
 from pydub import AudioSegment
-import sys
 import os
 
 class LectureLocalDataSource:

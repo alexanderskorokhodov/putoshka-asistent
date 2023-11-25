@@ -1,16 +1,6 @@
-import os
 
-from docx import Document
-from docx.enum.dml import MSO_THEME_COLOR_INDEX
-from docx.enum.style import WD_STYLE_TYPE
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-from docx.opc.oxml import qn
-from docx.oxml import OxmlElement
 from docx.shared import Inches, Pt, RGBColor
-import aspose.words as aw
 from docx2pdf import convert
-from pdf2docx.common import docx
-from docx.oxml import parse_xml, register_element_cls
 from docx.oxml.ns import nsdecls
 from docx.oxml.shape import CT_Picture
 from docx.oxml.xmlchemy import BaseOxmlElement, OneAndOnlyOne
