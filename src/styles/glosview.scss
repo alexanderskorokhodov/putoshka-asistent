@@ -40,6 +40,20 @@
             padding: 1em;
             border-radius: $border-radius-1;
             background: $white;
+            .termin {
+                display: flex;
+                flex-direction: column;
+            }
+            .termin>:first-child {
+                // font-weight: 600;
+            }
+            .termin>:last-child {
+                margin-top: 1em;
+                font-size: 20px;
+            }
+            .t {
+                font-size: 30px;
+            }
         }
     }
     .dictView>* {

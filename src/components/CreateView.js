@@ -12,12 +12,14 @@ import FileLecture from "./LectureUpload";
 import { useParams } from 'react-router-dom';
 function CreateView({add_lecture, nav}) {
 
+    const[isLoading, setLoading] = useState(false)
+
     const handleUploadClick = () => {
         if (!lecFile) {
             console.log('111')
           return;
         }
-        
+        setLoading(true)
         let formData = new FormData();
         formData.append('file', lecFile)
         // 👇 Uploading the file using the fetch API to the server
@@ -35,7 +37,7 @@ function CreateView({add_lecture, nav}) {
           .then((res) => res.json())
           .then((data) => {
             if (!file) {
-                add_lecture(data, FIO, title, theme);console.log(data)
+                add_lecture(data, FIO, title, theme);console.log(data);setLoading(false)
               return;
             }
             let formData = new FormData();
@@ -54,10 +56,11 @@ function CreateView({add_lecture, nav}) {
               },
             })
               .then((res) => res.json())
-              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data)})
-              .catch((err) => console.error(err));
+              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data);
+                setLoading(false)})
+              .catch((err) => {console.error(err);setLoading(false)});
             })
-          .catch((err) => console.error(err));
+          .catch((err) => {console.error(err);setLoading(false)});
       };
 
 
@@ -70,11 +73,11 @@ function CreateView({add_lecture, nav}) {
 
   return (
     <div className="createViewContainer">
-      <div className="topBarWrapper">
+      {isLoading? <div style={{display: "flex", flexDirection: "row", height: "100vh",alignItems: "center", justifyContent: "space-around"}}>Загружаем лекцию..</div> : [<div className="topBarWrapper">
         <div onClick={()=>{nav('/')}} className="close"><img src={Clear}/></div>
         <div className="addTitle ">Добавить Лекцию</div>
         <div className="spacer"/>
-        </div>
+        </div>,
       
       <div className="container">
         <FileUI file={file} setFile={setFile} fileRef={fileRef}/>
@@ -93,7 +96,7 @@ function CreateView({add_lecture, nav}) {
         </div>
         <FileLecture file={lecFile} setFile={setLecFile} />
         <div className={"upload button "+ ((!lecFile || !FIO || !theme || !title) ? 'not' : '')} onClick={handleUploadClick}>Готово</div>
-      </div>
+      </div>]}
     </div>
   );
 }

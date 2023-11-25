@@ -26,7 +26,6 @@ function LectureView({lectures, nav}) {
         if (!isG) {
             fetch(site_url+"get_image/?id="+lecture.data.id, {
                 method: 'GET',
-          
                 headers: {
                     'Accept': 'image/png',
                     "ngrok-skip-browser-warning": "1",
