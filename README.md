@@ -16,6 +16,8 @@
   Полина Назарова (ML Scientist)
 
 # Запуск
+Перейти на сайт: [Website](https://putoshka-asistent-sanatstudio.vercel.app)
+Скачать .APK: [APK](https://drive.google.com/file/d/16ezDuxbkezxa9fh2yasK67yjrRseu13C/view?usp=share_link)
 ---
 
 # Архитектура
