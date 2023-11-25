@@ -7,6 +7,7 @@ import CreateView from './components/CreateView';
 import React, {useState} from 'react';
 import LectureView from './components/LectureView';
 import GlosView from './components/GlosView';
+import EditLectureView from "./components/EditLectureView"
 
 import { useNavigate } from 'react-router';
 
@@ -55,8 +56,9 @@ function App() {
       <div className={'right '+(window.location.pathname==="/" ?'aaar':'')}>
           <Routes>
             <Route path="/" element={<CleanView/>} />
-            <Route path="/add" element={<CreateView nav={nav} add_lecture={add_lecture}/>} />
+            <Route path="/add" element={<CreateView nav={nav} lectures={lectures} add_lecture={add_lecture}/>} />
             <Route path="/lecture/:id" element={<LectureView lectures={lectures} nav={nav}/>} />
+            <Route path="/edit_lecture/:id" element={<EditLectureView setLectures = {setLectures} lectures={lectures} nav={nav}/>} />
             <Route path="/glos/:id" element={<GlosView lectures={lectures} nav={nav}/>} />
           </Routes>
       </div>

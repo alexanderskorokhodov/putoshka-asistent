@@ -60,9 +60,38 @@
             margin-top: 1em;
             cursor: pointer;
         }
+        .remove {
+            border: 2px solid $red;
+            background: $red;
+            color: $white;
+            justify-content: center;
+            padding: 0.4em 0;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            margin-top: 1em;
+            cursor: pointer;
+        }
         .upinfo {
             .up {
+                width: calc(100% - 1em);
                 font-size: 25px;
+            }
+            .input- {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1em;
+                width: 100%;
+            }
+            .input->*:first-child {
+                margin-bottom: 0.5em;
+            }
+            input {
+                font-size: 25px;
+                border-radius: $border-radius-1;
+                border: 0px solid $light-text;
+                margin-right: 0.5em;
+                width: 100%;
             }
             width: 100%;
             display: flex;
@@ -77,6 +106,32 @@
                 border-radius: 10px;
                 margin-left: 1em;
             }
+        }
+        textarea {
+            font-size: 25px;
+            border-radius: $border-radius-1;
+            border: none;
+            margin-right: 0.5em;
+            width: calc(100% - 1em);
+            resize: none;
+            height: 15em;
+            padding: 0.5em;
+            background: $input-inactive;
+        }
+        textarea:focus {
+            background: $input-active;
+        }
+        input {
+            padding: 0.5em;
+            border-radius: $border-radius-1;
+            margin-right: 0.5em;
+            width: 10em;
+            font-size: 23px;
+            border: none;
+            background: $input-inactive;
+        }
+        input:focus {
+            background: $input-active;
         }
     }
 }

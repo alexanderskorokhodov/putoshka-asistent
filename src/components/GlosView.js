@@ -14,26 +14,7 @@ function GlosView({lectures, nav}){
     console.log(lecture, id)
     const [chosen_id, setId] = useState(-1);
     console.log(lecture.data.terms)
-    const [mp3, setMp3] = useState("")
-    useEffect(()=>{
-    if (chosen_id!==-1 && !mp3) {
-        fetch(site_url+`get_voice_term/?id=${lecture.data.id}&start=${lecture.data.terms[chosen_id][2]}&end=${lecture.data.terms[chosen_id][3]}`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'audio/mp3',
-            "ngrok-skip-browser-warning": "1",
-            'Access-Control-Allow-Origin': '*',
-        },
-})
-.then((res) => {console.log(res);return res.blob()})
-.then((blob) => {
-    console.log(blob)
-    setMp3(<audio src={useObjectURL(blob)} 
-         />)})
     
-    
-.catch((err) => console.error(err));
-}})
 
     let view = lecture.data.terms.map((v, key) => {
         if ((chosen_id === -1) || (key === Number(chosen_id))) {
@@ -48,7 +29,6 @@ function GlosView({lectures, nav}){
                     {v[0]}
                 </div> 
                 <div>· {v[1].toLowerCase()}</div>
-                {mp3}
               </div> : "")}
             </div>
         } else {

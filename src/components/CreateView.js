@@ -10,7 +10,7 @@ import "../styles/createview.scss"
 import FileUI from "./FileUI";
 import FileLecture from "./LectureUpload";
 import { useParams } from 'react-router-dom';
-function CreateView({add_lecture, nav}) {
+function CreateView({add_lecture, nav, lectures}) {
 
     const[isLoading, setLoading] = useState(false)
 
@@ -56,8 +56,9 @@ function CreateView({add_lecture, nav}) {
               },
             })
               .then((res) => res.json())
-              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data);
-                setLoading(false)})
+              .then((_) => {add_lecture(data, FIO, title, theme);console.log(data, `/lecture/${lectures.length-1}`);
+                setLoading(false);
+              nav(`/lecture/${lectures.length}`)})
               .catch((err) => {console.error(err);setLoading(false)});
             })
           .catch((err) => {console.error(err);setLoading(false)});

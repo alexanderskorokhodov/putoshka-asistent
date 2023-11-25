@@ -3,6 +3,7 @@ import addIcon from "../icons/Add.svg";
 import SearchIcon from "../icons/SearchIcon.svg"
 import Settings from "../icons/Settings.svg"
 import Clear from "../icons/CloseBig.svg"
+import Edit from "../icons/Edit.svg"
 import site_url from "../site"
 
 import "../styles/lectureview.scss"
@@ -50,9 +51,10 @@ function LectureView({lectures, nav}) {
   return (
     <div className="lectureViewContainer">
       <div className="topBarWrapper">
-        <a href="/" className="close"><img src={Clear}/></a>
+        <div onClick={()=>{nav(`/`)}} className="close c"><img src={Clear}/></div>
         <div className="addTitle ">{lecture.title}</div>
-        <div className="spacer"/>
+        <div onClick={()=>{nav(`/edit_lecture/${id}`)}} className="edit c">
+          <img src={Edit}/></div>
         </div>
       
       <div className="container">
@@ -69,6 +71,10 @@ function LectureView({lectures, nav}) {
             setG(false);
             nav(`/glos/${id}`)
             forceUpdate()}}className="glosWrapper button">Глоссарий</div>
+            <div onClick={()=>{
+              lectures.splice(id, 1)
+                nav(`/`)
+                forceUpdate()}}className="remove button">Удалить</div>
      </div>
         
         
