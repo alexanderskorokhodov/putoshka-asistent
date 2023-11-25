@@ -21,25 +21,24 @@ function LectureElement({id, nav, theme, date, title, short_desc, data}) {
             var reader = new FileReader();
             reader.readAsDataURL(blob);
             reader.onloadend = function() {
-                let base64data = reader.result;
                 // console.log(base64data);
-                setImg(URL.createObjectURL(blob))
+                setImg(<div  className="lecImgWrapper"><img className="lecImg" src={URL.createObjectURL(blob)} alt=""/></div>)
 }
         })
         .catch((err) => console.error(err));
     }
-    const [img, setImg] = useState('')
+    const [img, setImg] = useState(<ContentLoader speed={2}
+        backgroundColor="#f3f3f3"
+        foregroundColor="#ecebeb" className="lecImgWrapper"> 
+                <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" />
+            </ContentLoader>)
     const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     useEffect(()=>
     {func();forceUpdate()}, id)
 
     return <div onClick={()=>{func();nav('/lecture?id='+id)}} className="lecWrapper" key={data.id}>
-        <ContentLoader speed={2}
-    backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb" className="lecImgWrapper"> 
-            <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" /><img className="lecImg" src={img} alt="image" />
-        </ContentLoader>
+        {img}
         <div className="lecDesc">
             <div className="lecTitle">{title}</div>
             <div className="lecShort light-text">{short_desc}</div>

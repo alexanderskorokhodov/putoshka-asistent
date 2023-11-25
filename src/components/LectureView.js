@@ -63,7 +63,11 @@ function LectureView({lectures, nav, id, setLectures}) {
       <div className="container">
         <div className="imgWrapper" >{img_}</div>
         <div className="upinfo">
-            <div className="up">{lecture.FIO} · {lecture.theme} <img onClick={()=>{lecture.featured = !lecture.featured;let y = lectures;y[id] = lecture; setLectures(y);
+            <div className="up">{lecture.FIO} · {lecture.theme} <img className="c" onClick={()=>{
+              lecture.featured = !lecture.featured;
+              let y = lectures;
+              y[id] = lecture; 
+              setLectures(y);
 
             }} src={lecture.featured ? Heart : HeartFill} alt=""/></div>
             <div>

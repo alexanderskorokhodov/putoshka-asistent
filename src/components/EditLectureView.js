@@ -54,7 +54,7 @@ function LectureView({setLectures, lectures, nav}) {
   return (
     <div className="lectureViewContainer">
       <div className="topBarWrapper">
-        <div onClick={()=>{nav(`/lecture/${id}`)}} className="close c"><img src={Clear}/></div>
+        <div onClick={()=>{nav(`/lecture?id=${id}`)}} className="close c"><img src={Clear}/></div>
         <div className="input-"><input className="addTitle " onChange={(e)=>{setTitle(e.target.value)}} defaultValue={title}/>
         </div><div className="spacer"/>
         </div>
@@ -77,7 +77,7 @@ function LectureView({setLectures, lectures, nav}) {
             lecture.data.short_descr = short
             lectures[id] = lecture
             setLectures(lectures)
-            nav(`/lecture/${id}`)}}className="glosWrapper button">Сохранить изменения</div>
+            nav(`/lecture/?id=${id}`)}}className="glosWrapper button">Сохранить изменения</div>
             <div onClick={()=>{
               lectures.splice(id, 1)
                 nav(`/`)
