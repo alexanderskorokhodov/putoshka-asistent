@@ -33,7 +33,7 @@ function LectureElement({id, nav, theme, date, title, short_desc, data}) {
     useEffect(()=>
     {func();forceUpdate()}, id)
 
-    return <div onClick={()=>{func();nav('/lecture/'+id)}} className="lecWrapper" key={data.id}>
+    return <div onClick={()=>{func();nav('/lecture?id='+id)}} className="lecWrapper" key={data.id}>
         <div className="lecImgWrapper"> 
             <img className="lecImg" src={img} alt="image" />
         </div>

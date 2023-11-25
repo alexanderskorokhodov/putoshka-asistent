@@ -10,7 +10,7 @@ import "../styles/lectures.scss"
 
 function Lectures({lectures, nav}) {
 
-  // const [chosen_id, set_id] = useState(0);
+  const [settings, setSettings] = useState(false);
 
   let id_ = -1;
   const lecView = lectures.map(
@@ -27,17 +27,57 @@ function Lectures({lectures, nav}) {
 
   )
       
-  
+  let FIOs = [...new Set(lectures.map((value)=>value.FIO))]
+  let themes = [...new Set(lectures.map((value)=>value.theme))]
+  const [chosenF, setChosenF] = useState(FIOs)
+  const [chosenT, setChosenT] = useState(themes)
+
+  console.log(FIOs, themes)
+
+  console.log(chosenF, chosenT)
   
   return (
     <div className="lcsViewContainer">
+      <div className="search">
       <div className="srchBrWrapper">
         <img src={SearchIcon} alt=""/>
         <input placeholder="Поиск"/>
-        <img src={Settings} alt=""/>
+        <img src={Settings} alt="" onClick={()=>{setSettings(!settings)}}/>
         <img src={Clear} alt=""/>
+      </div>
+      {settings ? <div className="filters">
+        <div className="fios">
+          <div className="title">Авторы</div>
+          <div className="list">
+          {FIOs.map((v, i)=>{return <div className="el">
+              
+              <input type="checkbox" checked={chosenF.indexOf(themes[i]) !== -1} onChange={()=>
+              {if (chosenF.indexOf(themes[i]) !== -1){
+                  setChosenF(chosenF.filter(a => a !== v))
+                } else {
+                  setChosenF([...chosenF, themes[i]])
+                }
+            }}/>{[v]}
+            </div>})}
+          </div>
         </div>
-
+        <div className="themes">
+          <div className="title">Темы</div>
+          <div className="list">
+            {themes.map((v, i)=>{return <div className="el">
+              
+              <input type="checkbox" checked={chosenT.indexOf(themes[i]) !== -1} onChange={()=>
+              {if (chosenT.indexOf(themes[i]) !== -1){
+                  setChosenT(chosenT.filter(a => a !== v))
+                } else {
+                  setChosenT([...chosenT, themes[i]])
+                }
+            }}/>{[v]}
+            </div>})}
+          </div>
+        </div>
+      </div>: ""}
+      </div>
       <div onClick={()=>nav("/add")} className="loadButtonWrapper button">
         <img src={addIcon}/>
         Добавить

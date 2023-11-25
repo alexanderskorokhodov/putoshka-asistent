@@ -11,12 +11,10 @@ import FileUI from "./FileUI";
 import FileLecture from "./LectureUpload";
 import { useParams } from "react-router-dom";
 
-function LectureView({lectures, nav}) {
-  let {id} = useParams();
+function LectureView({lectures, nav, id}) {
   let lecture = lectures[id]
-  const [isG, setG] = useState(false)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
-  console.log(lecture, id)
+  // console.log(lecture, id)
   const [img_, setImg] = useState(<img alt="" src={""}/>)
   useEffect(()=>
     {
@@ -24,7 +22,6 @@ function LectureView({lectures, nav}) {
             nav('/')
             return
         }
-        if (!isG) {
             fetch(site_url+"get_image/?id="+lecture.data.id, {
                 method: 'GET',
                 headers: {
@@ -36,10 +33,9 @@ function LectureView({lectures, nav}) {
         .then((res) => res.blob())
         .then((blob) => {
             setImg(<img alt="" src={URL.createObjectURL(blob)}/>)
-            setG(true)
             })
         .catch((err) => console.error(err));
-        }
+        
     }, [id]
   )
   if (id >= lectures.length || id < 0) {
@@ -68,9 +64,22 @@ function LectureView({lectures, nav}) {
         </div>
         <div>{lecture.data.short_descr}</div>
         <div onClick={()=>{
-            setG(false);
-            nav(`/glos/${id}`)
-            forceUpdate()}}className="glosWrapper button">Глоссарий</div>
+            nav(`/glos/${id}`);
+            fetch(site_url+"get_image/?id="+id, {
+              method: 'GET',
+              headers: {
+                  'Accept': 'image/png',
+                  "ngrok-skip-browser-warning": "1",
+                  'Access-Control-Allow-Origin': '*',
+              },
+    })
+      .then((res) => res.blob())
+      .then((blob) => {
+          setImg(<img alt="" src={URL.createObjectURL(blob)}/>)
+          })
+      .catch((err) => console.error(err));
+      }
+            }className="glosWrapper button">Глоссарий</div>
             <div onClick={()=>{
               lectures.splice(id, 1)
                 nav(`/`)
